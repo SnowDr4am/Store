@@ -10,8 +10,6 @@
         {% if products %}
             <div class="mb-3">
                 <h3 style="color: #00ff99; text-shadow: 0 0 5px #00ff99; margin-bottom: 15px;">{{ category.name }}</h3>
-                <!-- Отладочный комментарий: сколько товаров в категории -->
-                <!-- Количество товаров в категории {{ category.name }}: {{ products|length }} -->
                 <div class="category-carousel position-relative">
                     <button class="carousel-nav prev btn btn-neon btn-sm" onclick="scrollCarousel(this, -220)">❮</button>
                     <div class="carousel-track d-flex" style="overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;">
@@ -59,44 +57,89 @@ function scrollCarousel(button, scrollAmount) {
 <style>
 .category-carousel {
     position: relative;
+    padding: 0 30px; /* Добавляем отступы по бокам для кнопок */
+    margin: 0 -15px; /* Компенсируем padding для выравнивания с другими элементами */
 }
+
 .carousel-track {
     scroll-behavior: smooth;
     white-space: nowrap;
-    padding-bottom: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Для Firefox */
+    -ms-overflow-style: none; /* Для IE/Edge */
+    padding: 10px 0;
+    position: relative;
 }
+
 .carousel-track::-webkit-scrollbar {
-    display: none;
+    display: none; /* Скрываем скроллбар в Chrome/Safari */
 }
+
 .carousel-item {
     display: inline-block;
+    width: 220px; /* Фиксированная ширина элемента */
+    margin-right: 15px; /* Отступ между элементами */
+    scroll-snap-align: start;
+    vertical-align: top; /* Выравнивание по верху */
 }
+
+.carousel-item:last-child {
+    margin-right: 0; /* Убираем отступ у последнего элемента */
+}
+
 .carousel-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-    padding: 5px 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
     opacity: 0.7;
+    transition: all 0.3s ease;
 }
+
 .carousel-nav.prev {
-    left: -15px;
+    left: 5px;
 }
+
 .carousel-nav.next {
-    right: -15px;
+    right: 5px;
 }
+
 .carousel-nav:hover {
     background-color: #00ccff;
     box-shadow: 0 0 15px #00ccff;
     opacity: 1;
+    cursor: pointer;
 }
+
 @media (max-width: 767px) {
-    .carousel-item {
-        flex: 0 0 180px;
+    .category-carousel {
+        padding: 0 25px;
     }
+
+    .carousel-item {
+        width: 180px; /* Уменьшаем ширину для мобильных */
+    }
+
+    .carousel-nav {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+
     .carousel-nav.prev {
         left: 0;
     }
+
     .carousel-nav.next {
         right: 0;
     }
