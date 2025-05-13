@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+{{ product.name }}
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="product-header">
+        <div class="d-flex align-items-center mb-4">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 160px; height: 160px; object-fit: cover; border: 2px solid #00ff99; margin-right: 20px;">
+            <div>
+                <h1 style="color: #00ff99; text-shadow: 0 0 5px #00ff99;">Купить {{ product.name }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="fixed-header">
+        <div class="container d-flex align-items-center justify-content-between" style="background-color: #121212;">
+            <div class="d-flex align-items-center">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 50px; height: 50px; object-fit: cover; border: 1px solid #00ff99; margin-right: 10px;">
+                <h5 style="color: #00ff99; text-shadow: 0 0 5px #00ff99; margin-bottom: 0;">Купить {{ product.name }}</h5>
+            </div>
+            <div class="d-flex align-items-center">
+                <p class="text-primary mb-0 me-3">{{ product.price }} ₽</p>
+                <a href="{% url 'purchase' product.id %}" class="btn btn-neon btn-sm">Купить</a>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-6 d-flex align-items-center">
+            <p class="me-4"><span style="color: #00ff99;">★</span> {{ product.rating|floatformat:1 }}/5</p>
+            <p>{{ product.sales_count }} продаж</p>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-6 d-flex align-items-center ms-auto my-4">
+            <p class="text-primary fs-3 me-3 mb-0">{{ product.price }} ₽</p>
+            <a href="{% url 'purchase' product.id %}" class="btn btn-neon btn-lg">Купить</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 style="color: #00ff99; text-shadow: 0 0 5px #00ff99;">О продавце</h5>
+            {% if product.seller %}
+                <p style="color: #ffffff;"><strong>Продавец:</strong> {{ product.seller.username }}</p>
+                <p style="color: #ffffff;"><strong>Всего продаж:</strong> {{ seller_stats.total_sales }}</p>
+                <p style="color: #ffffff;"><strong>Средний рейтинг:</strong> {{ seller_stats.average_rating|floatformat:1 }}/5</p>
+            {% else %}
+                <p style="color: #ffffff;"><strong>Продавец:</strong> Не указан</p>
+                <p style="color: #ffffff;"><strong>Всего продаж:</strong> 0</p>
+                <p style="color: #ffffff;"><strong>Средний рейтинг:</strong> 0/5</p>
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        <h4 style="color: #e0e0e0;">Описание</h4>
+        <p style="white-space: pre-wrap; color: #e0e0e0;">{{ product.description }}</p>
+    </div>
+</div>
+{% endblock %}

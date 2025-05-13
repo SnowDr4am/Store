@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Создать товар
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="text-neon">Создать новый товар</h1>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-neon mt-3">Создать</button>
+    </form>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 style="color: #00ff99; text-shadow: 0 0 5px #00ff99;">Покупка успешна!</h1>
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 160px; height: 160px; object-fit: cover; margin-right: 20px; border: 2px solid #00ff99;">
+        <h1 style="color: #00ff99; text-shadow: 0 0 5px #00ff99; margin: 0;">Купить {{ product.name }}</h1>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body text-center">
+            <p style="color: #e0e0e0; margin: 0;">Код активации: <strong>{{ combination }}</strong></p>
+        </div>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="text-center">
+                    <p style="color: #e0e0e0;">Спасибо за вашу оценку!</p>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-neon">Вернуться в карточку товара</a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="text-center">
+            <h5 style="color: #00ff99; text-shadow: 0 0 5px #00ff99;">Оцените товар</h5>
+            <form method="POST" action="{% url 'rate_product' product.id %}">
+                {% csrf_token %}
+                <div class="star-rating mb-3">
+                    {% for i in "12345" %}
+                        <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required style="display: none;">
+                        <label for="star{{ i }}" class="star" data-value="{{ i }}">★</label>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-neon">Отправить оценку</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+<style>
+.star-rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 2rem;
+    color: #666;
+    cursor: pointer;
+}
+.star-rating label {
+    transition: color 0.3s;
+}
+.star-rating input:checked + label,
+.star-rating input:checked + label ~ label {
+    color: #00ff99 !important;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('.star-rating label');
+    stars.forEach(star => {
+        star.addEventListener('mouseover', function() {
+            const value = parseInt(this.dataset.value);
+            for (let i = 0; i < value; i++) {
+                stars[i].style.color = '#00ccff';
+            }
+            for (let i = value; i < stars.length; i++) {
+                stars[i].style.color = '#666';
+            }
+        });
+        star.addEventListener('mouseout', function() {
+            const checked = document.querySelector('.star-rating input:checked');
+            if (checked) {
+                const value = parseInt(checked.value);
+                for (let i = 0; i < value; i++) {
+                    stars[i].style.color = '#00ff99';
+                }
+                for (let i = value; i < stars.length; i++) {
+                    stars[i].style.color = '#666';
+                }
+            } else {
+                stars.forEach(s => s.style.color = '#666');
+            }
+        });
+        star.addEventListener('click', function() {
+            const value = parseInt(this.dataset.value);
+            for (let i = 0; i < value; i++) {
+                stars[i].style.color = '#00ff99';
+            }
+            for (let i = value; i < stars.length; i++) {
+                stars[i].style.color = '#666';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

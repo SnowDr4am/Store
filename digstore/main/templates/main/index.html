@@ -1,0 +1,105 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="my-4">
+    {% for category, products in products_by_category.items %}
+        {% if products %}
+            <div class="mb-3">
+                <h3 style="color: #00ff99; text-shadow: 0 0 5px #00ff99; margin-bottom: 15px;">{{ category.name }}</h3>
+                <!-- Отладочный комментарий: сколько товаров в категории -->
+                <!-- Количество товаров в категории {{ category.name }}: {{ products|length }} -->
+                <div class="category-carousel position-relative">
+                    <button class="carousel-nav prev btn btn-neon btn-sm" onclick="scrollCarousel(this, -220)">❮</button>
+                    <div class="carousel-track d-flex" style="overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;">
+                        {% for product in products %}
+                            <div class="carousel-item px-2" style="flex: 0 0 220px; scroll-snap-align: start;">
+                                <a href="{% url 'product_detail' product.id %}" class="text-decoration-none">
+                                    <div class="card h-100" style="width: 180px; height: 300px;">
+                                        <div style="display: flex; justify-content: center; padding: 10px;">
+                                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="width: 160px; height: 160px; object-fit: cover;">
+                                        </div>
+                                        <div class="card-body text-center p-2 d-flex flex-column justify-content-between">
+                                            <div>
+                                                <p class="card-text mb-1" style="color: #00ff99; font-size: 1rem;">{{ product.price }} ₽</p>
+                                                <h6 class="card-title" style="color: #e0e0e0; font-size: 0.75rem; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{ product.name }}</h6>
+                                            </div>
+                                            <a href="{% url 'product_detail' product.id %}" class="btn btn-neon btn-sm mt-2" style="font-size: 0.8rem;">Купить</a>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-nav next btn btn-neon btn-sm" onclick="scrollCarousel(this, 220)">❯</button>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% if not products_by_category %}
+        <p class="text-center">Товары не найдены</p>
+    {% endif %}
+</div>
+<script>
+function scrollCarousel(button, scrollAmount) {
+    const track = button.parentElement.querySelector('.carousel-track');
+    const currentScroll = track.scrollLeft;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+
+    let newScroll = currentScroll + scrollAmount;
+    newScroll = Math.max(0, Math.min(newScroll, maxScroll));
+
+    track.scrollTo({ left: newScroll, behavior: 'smooth' });
+}
+</script>
+
+<style>
+.category-carousel {
+    position: relative;
+}
+.carousel-track {
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    padding-bottom: 10px;
+}
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+.carousel-item {
+    display: inline-block;
+}
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    padding: 5px 10px;
+    opacity: 0.7;
+}
+.carousel-nav.prev {
+    left: -15px;
+}
+.carousel-nav.next {
+    right: -15px;
+}
+.carousel-nav:hover {
+    background-color: #00ccff;
+    box-shadow: 0 0 15px #00ccff;
+    opacity: 1;
+}
+@media (max-width: 767px) {
+    .carousel-item {
+        flex: 0 0 180px;
+    }
+    .carousel-nav.prev {
+        left: 0;
+    }
+    .carousel-nav.next {
+        right: 0;
+    }
+}
+</style>
+{% endblock %}
