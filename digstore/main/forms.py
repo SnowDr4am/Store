@@ -1,11 +1,19 @@
 from django.forms import ModelForm, TextInput, Textarea, FileInput, NumberInput, Select
-from .models import Product
+from .models import Product, Category
 from django.core.exceptions import ValidationError
 from PIL import Image
 import mimetypes
 import os
 
 class ProductForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.all()
+        self.fields['category'].widget.attrs.update({
+            'class': 'form-select',
+            'style': 'background-color: #2a2a2a; color: #e0e0e0; border: 1px solid #00ff99;'
+        })
+
     class Meta:
         model = Product
         fields = ["name", "description", "price", "image", "category", "combinations"]
@@ -30,10 +38,6 @@ class ProductForm(ModelForm):
             "image": FileInput(attrs={
                 "class": "form-control",
                 "accept": "image/*",
-                "style": "background-color: #2a2a2a; color: #e0e0e0; border: 1px solid #00ff99;"
-            }),
-            "category": Select(attrs={
-                "class": "form-select",
                 "style": "background-color: #2a2a2a; color: #e0e0e0; border: 1px solid #00ff99;"
             }),
             "combinations": Textarea(attrs={

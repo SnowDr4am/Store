@@ -16,7 +16,6 @@ def index(request):
     price_max = request.GET.get('price_max')
     rating_min = request.GET.get('rating_min')
 
-    # Получаем все товары и применяем фильтры
     products = Product.objects.all()
 
     if query:
@@ -43,19 +42,13 @@ def index(request):
         elif sort == 'created_at_desc':
             products = products.order_by('-created_at')
 
-    # Распределяем товары по категориям
     products_by_category = {}
     for category in categories:
         category_products = products.filter(category=category)
-        # Отладочный вывод: сколько товаров в каждой категории
-        print(f"Category: {category.name}, Products: {category_products.count()}")
         if category_filter and category.name not in category_filter:
             continue
-        products_by_category[category] = category_products  # Оставляем как QuerySet
+        products_by_category[category] = category_products
 
-    # Отладочный вывод: что передается в шаблон
-    for category, prods in products_by_category.items():
-        print(f"Template data - Category: {category.name}, Products: {list(prods)}")
 
     return render(request, 'main/index.html', {
         'title': 'Главная страница сайта',
@@ -80,7 +73,11 @@ def create(request):
         else:
             messages.error(request, 'Ошибка в форме. Пожалуйста, проверьте данные.')
     form = ProductForm()
-    return render(request, 'main/create.html', {'form': form})
+    categories = Category.objects.all() 
+    return render(request, 'main/create.html', {
+        'form': form,
+        'categories': categories
+    })
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)

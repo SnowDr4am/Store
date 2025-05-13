@@ -1,100 +1,110 @@
 {% extends 'main/base.html' %}
 
-{% block title %}
-{{ title }}
-{% endblock %}
+{% block title %}Покупка успешна{% endblock %}
 
 {% block content %}
-<div class="container my-4">
-    <h1 style="color: #00ff99; text-shadow: 0 0 5px #00ff99;">Покупка успешна!</h1>
-    <div class="d-flex justify-content-center align-items-center mb-4">
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 160px; height: 160px; object-fit: cover; margin-right: 20px; border: 2px solid #00ff99;">
-        <h1 style="color: #00ff99; text-shadow: 0 0 5px #00ff99; margin: 0;">Купить {{ product.name }}</h1>
-    </div>
-    <div class="card mb-4">
-        <div class="card-body text-center">
-            <p style="color: #e0e0e0; margin: 0;">Код активации: <strong>{{ combination }}</strong></p>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-neon text-center">
+                <div class="card-header bg-dark">
+                    <h1 class="text-neon mb-0">Покупка успешна!</h1>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center mb-4">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                             style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid #00ff99;">
+                        <h3 class="text-neon mt-3">{{ product.name }}</h3>
+                    </div>
+
+                    <div class="activation-code card mb-4">
+                        <div class="card-body">
+                            <h5 class="text-neon mb-2">Код активации</h5>
+                            <div class="code-display">
+                                <span class="text-neon-secondary">{{ combination }}</span>
+                                <button class="btn btn-sm btn-neon-outline ms-3" onclick="copyToClipboard('{{ combination }}')">
+                                    <i class="bi bi-clipboard"></i> Копировать
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if messages %}
+                        <div class="alert alert-success">
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                        <a href="{% url 'product_detail' product.id %}" class="btn btn-neon mt-3">
+                            Вернуться к товару
+                        </a>
+                    {% else %}
+                        <div class="rating-section mt-4">
+                            <h5 class="text-neon mb-3">Оцените товар</h5>
+                            <form method="POST" action="{% url 'rate_product' product.id %}" class="star-rating-form">
+                                {% csrf_token %}
+                                <div class="stars mb-3">
+                                    {% for i in "54321" %}
+                                        <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required>
+                                        <label for="star{{ i }}" class="star" title="{{ i }} звезд">★</label>
+                                    {% endfor %}
+                                </div>
+                                <button type="submit" class="btn btn-neon">Отправить оценку</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.tags == 'success' %}
-                <div class="text-center">
-                    <p style="color: #e0e0e0;">Спасибо за вашу оценку!</p>
-                    <a href="{% url 'product_detail' product.id %}" class="btn btn-neon">Вернуться в карточку товара</a>
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <div class="text-center">
-            <h5 style="color: #00ff99; text-shadow: 0 0 5px #00ff99;">Оцените товар</h5>
-            <form method="POST" action="{% url 'rate_product' product.id %}">
-                {% csrf_token %}
-                <div class="star-rating mb-3">
-                    {% for i in "12345" %}
-                        <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required style="display: none;">
-                        <label for="star{{ i }}" class="star" data-value="{{ i }}">★</label>
-                    {% endfor %}
-                </div>
-                <button type="submit" class="btn btn-neon">Отправить оценку</button>
-            </form>
-        </div>
-    {% endif %}
 </div>
+
 <style>
-.star-rating {
+.activation-code {
+    background-color: rgba(0, 255, 153, 0.05);
+    border: 1px solid #00ff99;
+}
+
+.code-display {
+    font-size: 1.5rem;
+    font-family: monospace;
     display: flex;
-    flex-direction: row;
+    align-items: center;
     justify-content: center;
+}
+
+.star-rating-form .stars {
+    display: flex;
+    justify-content: center;
+    direction: rtl;
+}
+
+.star-rating-form input[type="radio"] {
+    display: none;
+}
+
+.star-rating-form .star {
     font-size: 2rem;
-    color: #666;
+    color: #444;
     cursor: pointer;
+    transition: color 0.2s;
+    margin: 0 5px;
 }
-.star-rating label {
-    transition: color 0.3s;
-}
-.star-rating input:checked + label,
-.star-rating input:checked + label ~ label {
-    color: #00ff99 !important;
+
+.star-rating-form .star:hover,
+.star-rating-form .star:hover ~ .star,
+.star-rating-form input[type="radio"]:checked ~ .star {
+    color: #00ff99;
 }
 </style>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const stars = document.querySelectorAll('.star-rating label');
-    stars.forEach(star => {
-        star.addEventListener('mouseover', function() {
-            const value = parseInt(this.dataset.value);
-            for (let i = 0; i < value; i++) {
-                stars[i].style.color = '#00ccff';
-            }
-            for (let i = value; i < stars.length; i++) {
-                stars[i].style.color = '#666';
-            }
-        });
-        star.addEventListener('mouseout', function() {
-            const checked = document.querySelector('.star-rating input:checked');
-            if (checked) {
-                const value = parseInt(checked.value);
-                for (let i = 0; i < value; i++) {
-                    stars[i].style.color = '#00ff99';
-                }
-                for (let i = value; i < stars.length; i++) {
-                    stars[i].style.color = '#666';
-                }
-            } else {
-                stars.forEach(s => s.style.color = '#666');
-            }
-        });
-        star.addEventListener('click', function() {
-            const value = parseInt(this.dataset.value);
-            for (let i = 0; i < value; i++) {
-                stars[i].style.color = '#00ff99';
-            }
-            for (let i = value; i < stars.length; i++) {
-                stars[i].style.color = '#666';
-            }
-        });
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Код скопирован в буфер обмена!');
+    }, function(err) {
+        console.error('Не удалось скопировать текст: ', err);
     });
-});
+}
 </script>
 {% endblock %}
