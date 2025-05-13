@@ -1,0 +1,242 @@
+/* Основные стили */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px);
+    padding: 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.auth-card {
+    background: rgba(30, 30, 30, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 255, 153, 0.1);
+    border: 1px solid #00ff99;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-title {
+    color: #00ff99;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px #00ff99;
+}
+
+.auth-icon {
+    font-size: 3rem;
+    color: #00ff99;
+    margin-bottom: 10px;
+}
+
+/* Форма */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-label {
+    display: block;
+    color: #e0e0e0;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    background: rgba(40, 40, 40, 0.7);
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-input:focus {
+    border-color: #00ff99;
+    box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
+    outline: none;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 38px;
+    color: #00ff99;
+    font-size: 1.1rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 38px;
+    background: none;
+    border: none;
+    color: #b0b0b0;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.toggle-password:hover {
+    color: #00ff99;
+}
+
+/* Кнопки */
+.auth-btn {
+    background: #00ff99;
+    color: #121212;
+    border: none;
+    border-radius: 6px;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    background: #00ccff;
+    box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
+}
+
+/* Футер формы */
+.auth-footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.auth-text {
+    color: #b0b0b0;
+    margin-bottom: 15px;
+}
+
+.auth-link {
+    color: #00ff99;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.auth-link:hover {
+    color: #00ccff;
+    text-decoration: underline;
+}
+
+.forgot-password {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    color: #00ff99;
+}
+
+/* Сообщения об ошибках */
+.error-message {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Адаптивность */
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 30px 20px;
+    }
+
+    .auth-title {
+        font-size: 1.5rem;
+    }
+
+    .auth-icon {
+        font-size: 2.5rem;
+    }
+
+    .form-input {
+        padding: 10px 15px 10px 40px;
+    }
+
+    .input-icon,
+    .toggle-password {
+        top: 34px;
+    }
+}
+
+/* Дополнительные стили для регистрации */
+.password-requirements {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(40, 40, 40, 0.5);
+    border-radius: 6px;
+    border-left: 3px solid #00ff99;
+}
+
+.requirements-title {
+    color: #00ff99;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.requirements-list {
+    color: #b0b0b0;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.requirements-list li {
+    margin-bottom: 5px;
+}
+
+.password-strength {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.password-strength span {
+    display: block;
+    height: 4px;
+    background: #00ff99;
+    border-radius: 2px;
+    transition: width 0.3s, background 0.3s;
+}
+
+.password-strength p {
+    color: #b0b0b0;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+/* Цвета для индикатора сложности */
+.password-strength[data-strength="weak"] span {
+    background: #ff4d4d;
+    width: 30%;
+}
+
+.password-strength[data-strength="medium"] span {
+    background: #ffcc00;
+    width: 60%;
+}
+
+.password-strength[data-strength="strong"] span {
+    background: #00ff99;
+    width: 100%;
+}

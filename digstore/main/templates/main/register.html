@@ -1,44 +1,94 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
-{% block title %}Регистрация{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/auth.css' %}">
+{% endblock %}
+
+{% block title %}Регистрация аккаунта{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card border-neon bg-dark">
-                <div class="card-header">
-                    <h2 class="text-neon text-center mb-0">Регистрация</h2>
-                </div>
-                <div class="card-body">
-                    <form method="post" class="neon-form">
-                        {% csrf_token %}
-                        <div class="mb-4">
-                            <label for="username" class="form-label">Имя пользователя</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Введите имя пользователя" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Введите email" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="password" class="form-label">Пароль</label>
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Введите пароль" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="password_confirm" class="form-label">Подтверждение пароля</label>
-                            <input type="password" name="password_confirm" id="password_confirm" class="form-control" placeholder="Подтвердите пароль" required>
-                        </div>
-                        <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-neon">Зарегистрироваться</button>
-                        </div>
-                    </form>
-                    <div class="text-center mt-3">
-                        <p class="text-light">Уже есть аккаунт? <a href="{% url 'login' %}" class="text-neon">Войдите</a></p>
-                    </div>
-                </div>
+<main class="auth-container">
+    <section class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Создать аккаунт</h1>
+            <div class="auth-icon">
+                <i class="bi bi-person-plus"></i>
             </div>
         </div>
-    </div>
-</div>
+
+        <form method="post" class="auth-form" novalidate>
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="username" class="form-label">Имя пользователя</label>
+                <input type="text" id="username" name="username" class="form-input"
+                   placeholder="Придумайте логин" required
+                   value="{{ username }}">
+                <i class="bi bi-person input-icon"></i>
+                {% if form.errors.username %}
+                    <div class="error-message">{{ form.errors.username }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-input"
+                   placeholder="Ваш email" required
+                   value="{{ email }}">
+                <i class="bi bi-envelope input-icon"></i>
+                {% if form.errors.email %}
+                    <div class="error-message">{{ form.errors.email }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="password1" class="form-label">Пароль</label>
+                <input type="password" id="password1" name="password1" class="form-input"
+                       placeholder="Создайте пароль" required>
+                <i class="bi bi-lock input-icon"></i>
+                <button type="button" class="toggle-password">
+                    <i class="bi bi-eye"></i>
+                </button>
+                {% if form.errors.password1 %}
+                    <div class="error-message">{{ form.errors.password1 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="password2" class="form-label">Подтверждение пароля</label>
+                <input type="password" id="password2" name="password2" class="form-input"
+                       placeholder="Повторите пароль" required>
+                <i class="bi bi-shield-lock input-icon"></i>
+                <button type="button" class="toggle-password">
+                    <i class="bi bi-eye"></i>
+                </button>
+                {% if form.errors.password2 %}
+                    <div class="error-message">{{ form.errors.password2 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="auth-btn">Зарегистрироваться</button>
+        </form>
+
+        <div class="auth-footer">
+            <p class="auth-text">Уже есть аккаунт?
+                <a href="{% url 'login' %}" class="auth-link">Войдите</a>
+            </p>
+            <div class="password-requirements">
+                <p class="requirements-title">Требования к паролю:</p>
+                <ul class="requirements-list">
+                    <li>Минимум 8 символов</li>
+                    <li>Хотя бы одна цифра</li>
+                    <li>Хотя бы одна буква</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'main/js/auth.js' %}"></script>
+<script src="{% static 'main/js/register.js' %}"></script>
 {% endblock %}

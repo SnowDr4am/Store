@@ -1,13 +1,201 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
-{% block title %}
-О нас
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/about.css' %}">
 {% endblock %}
 
+{% block title %}О DreamStore{% endblock %}
+
 {% block content %}
-<div class="container my-4">
-    <h1 class="text-neon">О DreamStore</h1>
-    <p>DreamStore — это платформа для покупки и продажи цифровых товаров. Мы предлагаем удобный интерфейс, безопасные транзакции и широкий выбор продуктов от проверенных продавцов.</p>
-    <p>Наша миссия — сделать процесс покупки цифровых товаров простым и надежным. Присоединяйтесь к нам и откройте мир цифровых возможностей!</p>
-</div>
+<section class="about-hero">
+    <div class="hero-content">
+        <h1 class="hero-title">
+            <span class="neon-text">Dream</span><span class="neon-secondary">Store</span>
+        </h1>
+        <p class="hero-subtitle">Ваш проводник в мир цифровых возможностей</p>
+        <div class="scrolling-arrow">
+            <i class="bi bi-chevron-down"></i>
+        </div>
+    </div>
+</section>
+
+<section class="about-section mission-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Наша миссия</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="mission-grid">
+            <div class="mission-card">
+                <div class="mission-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h3>Безопасность</h3>
+                <p>Гарантируем 100% безопасность всех транзакций и защиту ваших данных</p>
+            </div>
+            <div class="mission-card">
+                <div class="mission-icon">
+                    <i class="bi bi-lightning-charge"></i>
+                </div>
+                <h3>Скорость</h3>
+                <p>Мгновенная доставка цифровых товаров сразу после оплаты</p>
+            </div>
+            <div class="mission-card">
+                <div class="mission-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <h3>Сообщество</h3>
+                <p>Платформа, объединяющая покупателей и проверенных продавцов</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-section features-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Почему выбирают нас</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="feature-tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="tab1">Ассортимент</button>
+                <button class="tab-button" data-tab="tab2">Поддержка</button>
+                <button class="tab-button" data-tab="tab3">Технологии</button>
+            </div>
+
+            <div class="tab-content active" id="tab1">
+                <div class="feature-content">
+                    <div class="feature-image">
+                        <img src="{% static 'main/images/about1.svg' %}" alt="Ассортимент" class="pulse-animation">
+                    </div>
+                    <div class="feature-text">
+                        <h3>Более 10,000 цифровых товаров</h3>
+                        <ul class="feature-list">
+                            <li><i class="bi bi-check-circle"></i> Игры для всех платформ</li>
+                            <li><i class="bi bi-check-circle"></i> Лицензионное ПО</li>
+                            <li><i class="bi bi-check-circle"></i> Цифровые подписки</li>
+                            <li><i class="bi bi-check-circle"></i> Уникальные ключи активации</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab2">
+                <div class="feature-content">
+                    <div class="feature-text">
+                        <h3>Круглосуточная поддержка</h3>
+                        <p>Наша команда поддержки работает 24/7, чтобы решить любые ваши вопросы. Среднее время ответа - менее 15 минут.</p>
+                        <div class="support-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">98%</div>
+                                <div class="stat-label">Удовлетворенных клиентов</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">24/7</div>
+                                <div class="stat-label">Доступность поддержки</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-image">
+                        <img src="{% static 'main/images/about2.svg' %}" alt="Поддержка" class="float-animation">
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab3">
+                <div class="feature-content">
+                    <div class="feature-image">
+                        <img src="{% static 'main/images/about3.svg' %}" alt="Технологии" class="rotate-animation">
+                    </div>
+                    <div class="feature-text">
+                        <h3>Инновационные технологии</h3>
+                        <p>Используем блокчейн для проверки подлинности ключей и smart-контракты для безопасных сделок.</p>
+                        <div class="tech-badges">
+                            <span class="tech-badge">Blockchain</span>
+                            <span class="tech-badge">AI Verification</span>
+                            <span class="tech-badge">Smart Contracts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-section team-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Наша команда</h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">Профессионалы, создающие лучший опыт для вас</p>
+        </div>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-photo">
+                    <img src="{% static 'main/images/team1.jpg' %}" alt="Алексей Петров">
+                    <div class="team-social">
+                        <a href="#"><i class="bi bi-github"></i></a>
+                        <a href="#"><i class="bi bi-telegram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <h3>Алексей Петров</h3>
+                <p class="team-position">Основатель & CEO</p>
+                <p class="team-bio">Более 10 лет опыта в цифровой дистрибуции</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-photo">
+                    <img src="{% static 'main/images/team2.jpg' %}" alt="Мария Смирнова">
+                    <div class="team-social">
+                        <a href="#"><i class="bi bi-github"></i></a>
+                        <a href="#"><i class="bi bi-telegram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <h3>Мария Смирнова</h3>
+                <p class="team-position">Технический директор</p>
+                <p class="team-bio">Эксперт в области кибербезопасности</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-photo">
+                    <img src="{% static 'main/images/team3.jpg' %}" alt="Иван Козлов">
+                    <div class="team-social">
+                        <a href="#"><i class="bi bi-github"></i></a>
+                        <a href="#"><i class="bi bi-telegram"></i></a>
+                        <div class="team-social">
+                        <a href="#"><i class="bi bi-github"></i></a>
+                        <a href="#"><i class="bi bi-telegram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <h3>Иван Козлов</h3>
+                <p class="team-position">Директор по развитию</p>
+                <p class="team-bio">Специалист по партнерским программам</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-section cta-section">
+    <div class="container">
+        <div class="cta-card">
+            <h2 class="cta-title">Готовы начать?</h2>
+            <p class="cta-text">Присоединяйтесь к тысячам довольных клиентов DreamStore</p>
+            <div class="cta-buttons">
+                <a href="{% url 'register' %}" class="cta-btn primary">Регистрация</a>
+                <a href="{% url 'home' %}" class="cta-btn secondary">В каталог</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'main/js/about.js' %}"></script>
 {% endblock %}

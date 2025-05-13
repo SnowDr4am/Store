@@ -1,110 +1,62 @@
 {% extends 'main/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/purchase_success.css' %}">
+{% endblock %}
 
 {% block title %}Покупка успешна{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card border-neon text-center">
-                <div class="card-header bg-dark">
-                    <h1 class="text-neon mb-0">Покупка успешна!</h1>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex flex-column align-items-center mb-4">
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
-                             style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid #00ff99;">
-                        <h3 class="text-neon mt-3">{{ product.name }}</h3>
-                    </div>
+<main class="purchase-success-container">
+    <article class="success-card">
+        <header class="success-header">
+            <h1 class="success-title">Покупка успешна!</h1>
+        </header>
 
-                    <div class="activation-code card mb-4">
-                        <div class="card-body">
-                            <h5 class="text-neon mb-2">Код активации</h5>
-                            <div class="code-display">
-                                <span class="text-neon-secondary">{{ combination }}</span>
-                                <button class="btn btn-sm btn-neon-outline ms-3" onclick="copyToClipboard('{{ combination }}')">
-                                    <i class="bi bi-clipboard"></i> Копировать
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {% if messages %}
-                        <div class="alert alert-success">
-                            {% for message in messages %}
-                                {{ message }}
-                            {% endfor %}
-                        </div>
-                        <a href="{% url 'product_detail' product.id %}" class="btn btn-neon mt-3">
-                            Вернуться к товару
-                        </a>
-                    {% else %}
-                        <div class="rating-section mt-4">
-                            <h5 class="text-neon mb-3">Оцените товар</h5>
-                            <form method="POST" action="{% url 'rate_product' product.id %}" class="star-rating-form">
-                                {% csrf_token %}
-                                <div class="stars mb-3">
-                                    {% for i in "54321" %}
-                                        <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required>
-                                        <label for="star{{ i }}" class="star" title="{{ i }} звезд">★</label>
-                                    {% endfor %}
-                                </div>
-                                <button type="submit" class="btn btn-neon">Отправить оценку</button>
-                            </form>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
+        <div class="product-info">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+            <h2 class="product-name">{{ product.name }}</h2>
         </div>
-    </div>
-</div>
 
-<style>
-.activation-code {
-    background-color: rgba(0, 255, 153, 0.05);
-    border: 1px solid #00ff99;
-}
+        <section class="activation-code-section">
+            <h3 class="section-title">Код активации</h3>
+            <div class="code-container">
+                <span class="code-value">{{ combination }}</span>
+                <button class="copy-btn" data-clipboard-text="{{ combination }}">
+                    <i class="bi bi-clipboard"></i> Копировать
+                </button>
+            </div>
+        </section>
 
-.code-display {
-    font-size: 1.5rem;
-    font-family: monospace;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        {% if messages %}
+            <div class="alert alert-success">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+            <a href="{% url 'product_detail' product.id %}" class="back-btn">
+                Вернуться к товару
+            </a>
+        {% else %}
+            <section class="rating-section">
+                <h3 class="section-title">Оцените товар</h3>
+                <form method="POST" action="{% url 'rate_product' product.id %}" class="rating-form">
+                    {% csrf_token %}
+                    <div class="stars-rating">
+                        {% for i in "54321" %}
+                            <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required>
+                            <label for="star{{ i }}" class="star"></label>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="submit-rating-btn">Отправить оценку</button>
+                </form>
+            </section>
+        {% endif %}
+    </article>
+</main>
+{% endblock %}
 
-.star-rating-form .stars {
-    display: flex;
-    justify-content: center;
-    direction: rtl;
-}
-
-.star-rating-form input[type="radio"] {
-    display: none;
-}
-
-.star-rating-form .star {
-    font-size: 2rem;
-    color: #444;
-    cursor: pointer;
-    transition: color 0.2s;
-    margin: 0 5px;
-}
-
-.star-rating-form .star:hover,
-.star-rating-form .star:hover ~ .star,
-.star-rating-form input[type="radio"]:checked ~ .star {
-    color: #00ff99;
-}
-</style>
-
-<script>
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(function() {
-        alert('Код скопирован в буфер обмена!');
-    }, function(err) {
-        console.error('Не удалось скопировать текст: ', err);
-    });
-}
-</script>
+{% block extra_js %}
+<script src="{% static 'main/js/purchase_success.js' %}"></script>
 {% endblock %}

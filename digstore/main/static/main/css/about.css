@@ -1,0 +1,541 @@
+/* Основные стили */
+.about-hero {
+    height: 70vh;
+    min-height: 500px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(0, 255, 153, 0.7);
+}
+
+.neon-text {
+    color: #00ff99;
+    animation: neonGlow 2s infinite alternate;
+}
+
+.neon-secondary {
+    color: #00ccff;
+    animation: neonGlowSecondary 2s infinite alternate 0.5s;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: #e0e0e0;
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+.scrolling-arrow {
+    font-size: 2rem;
+    color: #00ff99;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+    cursor: pointer;
+}
+
+/* Секции */
+.about-section {
+    padding: 80px 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: #00ff99;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-divider {
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #00ff99, #00ccff);
+    margin: 0 auto;
+    border-radius: 3px;
+}
+
+.section-subtitle {
+    color: #b0b0b0;
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 15px auto 0;
+}
+
+/* Миссия */
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.mission-card {
+    background: rgba(30, 30, 30, 0.7);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #333;
+}
+
+.mission-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 255, 153, 0.1);
+    border-color: #00ff99;
+}
+
+.mission-icon {
+    font-size: 3rem;
+    color: #00ff99;
+    margin-bottom: 20px;
+}
+
+.mission-card h3 {
+    color: #e0e0e0;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.mission-card p {
+    color: #b0b0b0;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Вкладки */
+.feature-tabs {
+    margin-top: 50px;
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    padding: 12px 25px;
+    background: rgba(40, 40, 40, 0.7);
+    border: none;
+    border-radius: 30px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-button:hover {
+    background: rgba(0, 255, 153, 0.1);
+    color: #00ff99;
+}
+
+.tab-button.active {
+    background: #00ff99;
+    color: #121212;
+    font-weight: bold;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.feature-content {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.feature-image {
+    flex: 1;
+}
+
+.feature-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.feature-text {
+    flex: 1;
+}
+
+.feature-text h3 {
+    font-size: 1.8rem;
+    color: #00ff99;
+    margin-bottom: 20px;
+}
+
+.feature-text p {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    color: #e0e0e0;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-list i {
+    color: #00ff99;
+}
+
+.support-stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    color: #00ff99;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+}
+
+.tech-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.tech-badge {
+    background: rgba(0, 255, 153, 0.1);
+    color: #00ff99;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* Команда */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.team-card {
+    background: rgba(30, 30, 30, 0.7);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s;
+    border: 1px solid #333;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    border-color: #00ff99;
+}
+
+.team-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    position: relative;
+    border: 3px solid #00ff99;
+}
+
+.team-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-social {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    background: rgba(18, 18, 18, 0.9);
+    padding: 10px 15px;
+    border-radius: 30px;
+    border: 1px solid #00ff99;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.team-card:hover .team-social {
+    opacity: 1;
+}
+
+.team-social a {
+    color: #e0e0e0;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.team-social a:hover {
+    color: #00ff99;
+}
+
+.team-card h3 {
+    color: #e0e0e0;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+.team-position {
+    color: #00ff99;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.team-bio {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* CTA */
+.cta-section {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 100px 0;
+}
+
+.cta-card {
+    background: rgba(30, 30, 30, 0.9);
+    border-radius: 12px;
+    padding: 60px;
+    text-align: center;
+    border: 1px solid #00ff99;
+    box-shadow: 0 0 30px rgba(0, 255, 153, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    color: #00ff99;
+    margin-bottom: 15px;
+}
+
+.cta-text {
+    color: #e0e0e0;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cta-btn {
+    padding: 15px 30px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.cta-btn.primary {
+    background: #00ff99;
+    color: #121212;
+}
+
+.cta-btn.primary:hover {
+    background: #00ccff;
+    box-shadow: 0 0 20px rgba(0, 204, 255, 0.5);
+}
+
+.cta-btn.secondary {
+    background: transparent;
+    color: #00ff99;
+    border: 2px solid #00ff99;
+}
+
+.cta-btn.secondary:hover {
+    background: rgba(0, 255, 153, 0.1);
+    box-shadow: 0 0 20px rgba(0, 255, 153, 0.2);
+}
+
+/* Анимации */
+@keyframes neonGlow {
+    from {
+        text-shadow: 0 0 10px rgba(0, 255, 153, 0.7);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(0, 255, 153, 0.9), 0 0 30px rgba(0, 255, 153, 0.5);
+    }
+}
+
+@keyframes neonGlowSecondary {
+    from {
+        text-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(0, 204, 255, 0.9), 0 0 30px rgba(0, 204, 255, 0.5);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+    }
+    40% {
+        transform: translateY(-20px) translateX(-50%);
+    }
+    60% {
+        transform: translateY(-10px) translateX(-50%);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.float-animation {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.rotate-animation {
+    animation: rotate 15s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+
+    .feature-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .cta-card {
+        padding: 40px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .cta-title {
+        font-size: 2rem;
+    }
+
+    .cta-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-hero {
+        height: 60vh;
+        min-height: 400px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .mission-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .support-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .cta-btn {
+        width: 100%;
+    }
+}

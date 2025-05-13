@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import ProductForm
@@ -73,7 +75,7 @@ def create(request):
         else:
             messages.error(request, 'Ошибка в форме. Пожалуйста, проверьте данные.')
     form = ProductForm()
-    categories = Category.objects.all() 
+    categories = Category.objects.all()
     return render(request, 'main/create.html', {
         'form': form,
         'categories': categories
@@ -122,25 +124,79 @@ def user_login(request):
             messages.error(request, 'Неверное имя пользователя или пароль.')
     return render(request, 'main/login.html')
 
+User = get_user_model()
+
 def user_register(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        password_confirm = request.POST['password_confirm']
-        if password == password_confirm:
-            if User.objects.filter(username=username).exists():
-                messages.error(request, 'Пользователь с таким именем уже существует.')
-            elif User.objects.filter(email=email).exists():
-                messages.error(request, 'Этот email уже зарегистрирован.')
-            else:
-                user = User.objects.create_user(username=username, email=email, password=password)
-                login(request, user)
-                messages.success(request, 'Регистрация успешна!')
-                return redirect('home')
+        username = request.POST.get('username', '').strip()
+        email = request.POST.get('email', '').strip().lower()
+        password = request.POST.get('password1', '')
+        password_confirm = request.POST.get('password2', '')
+
+        errors = []
+
+        if not username:
+            errors.append('Введите имя пользователя')
+        elif len(username) < 4:
+            errors.append('Имя пользователя должно содержать минимум 4 символа')
+        elif not username.isalnum():
+            errors.append('Имя пользователя может содержать только буквы и цифры')
+        elif User.objects.filter(username__iexact=username).exists():
+            errors.append('Пользователь с таким именем уже существует')
+
+        try:
+            validate_email(email)
+            if User.objects.filter(email__iexact=email).exists():
+                errors.append('Этот email уже зарегистрирован')
+        except ValidationError:
+            errors.append('Введите корректный email адрес')
+
+        if password != password_confirm:
+            errors.append('Пароли не совпадают')
         else:
-            messages.error(request, 'Пароли не совпадают.')
-    return render(request, 'main/register.html')
+            if len(password) < 8:
+                errors.append('Пароль должен содержать минимум 8 символов')
+            if not any(char.isdigit() for char in password):
+                errors.append('Пароль должен содержать хотя бы одну цифру')
+            if not any(char.isalpha() for char in password):
+                errors.append('Пароль должен содержать хотя бы одну букву')
+
+        if not errors:
+            try:
+                user = User.objects.create_user(
+                    username=username,
+                    email=email,
+                    password=password
+                )
+                user.is_active = True
+                user.save()
+
+                from django.contrib.auth import login
+                login(request, user)
+
+                messages.success(request, 'Регистрация успешна! Добро пожаловать!')
+                return redirect('home')
+
+            except Exception as e:
+                errors.append('Произошла ошибка при создании аккаунта. Пожалуйста, попробуйте позже.')
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.error(f"Registration error: {str(e)}")
+
+        for error in errors:
+            messages.error(request, error)
+
+        request.session['register_form_data'] = {
+            'username': username,
+            'email': email,
+        }
+
+    form_data = request.session.pop('register_form_data', {})
+
+    return render(request, 'main/register.html', {
+        'username': form_data.get('username', ''),
+        'email': form_data.get('email', ''),
+    })
 
 def user_logout(request):
     logout(request)

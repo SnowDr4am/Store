@@ -1,36 +1,55 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
-{% block title %}Вход{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/auth.css' %}">
+{% endblock %}
+
+{% block title %}Вход в систему{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card border-neon bg-dark">
-                <div class="card-header">
-                    <h2 class="text-neon text-center mb-0">Вход</h2>
-                </div>
-                <div class="card-body">
-                    <form method="post" class="neon-form">
-                        {% csrf_token %}
-                        <div class="mb-4">
-                            <label for="username" class="form-label">Имя пользователя</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Введите имя пользователя" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="password" class="form-label">Пароль</label>
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Введите пароль" required>
-                        </div>
-                        <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-neon">Войти</button>
-                        </div>
-                    </form>
-                    <div class="text-center mt-3">
-                        <p class="text-light">Нет аккаунта? <a href="{% url 'register' %}" class="text-neon">Зарегистрируйтесь</a></p>
-                    </div>
-                </div>
+<main class="auth-container">
+    <section class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Вход в аккаунт</h1>
+            <div class="auth-icon">
+                <i class="bi bi-person-circle"></i>
             </div>
         </div>
-    </div>
-</div>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="username" class="form-label">Имя пользователя</label>
+                <input type="text" id="username" name="username" class="form-input"
+                       placeholder="Введите ваш логин" required>
+                <i class="bi bi-person input-icon"></i>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Пароль</label>
+                <input type="password" id="password" name="password" class="form-input"
+                       placeholder="Введите ваш пароль" required>
+                <i class="bi bi-lock input-icon"></i>
+                <button type="button" class="toggle-password">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+
+            <button type="submit" class="auth-btn">Войти</button>
+        </form>
+
+        <div class="auth-footer">
+            <p class="auth-text">Нет аккаунта?
+                <a href="{% url 'register' %}" class="auth-link">Зарегистрируйтесь</a>
+            </p>
+            <a href="#" class="forgot-password">Забыли пароль?</a>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'main/js/auth.js' %}"></script>
 {% endblock %}

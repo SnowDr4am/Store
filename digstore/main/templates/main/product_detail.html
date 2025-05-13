@@ -1,151 +1,83 @@
 {% extends 'main/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/product_detail.css' %}">
+{% endblock %}
 
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-<div class="container my-4">
-    <div class="product-header">
-        <!-- Верхний блок с изображением и названием -->
-        <div class="d-flex align-items-center mb-4">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}"
-                 style="width: 120px; height: 120px; object-fit: cover; border: 2px solid #00ff99; border-radius: 8px; margin-right: 20px;">
-            <h1 class="text-neon mb-0" style="font-size: 1.8rem;">{{ product.name }}</h1>
+<article class="product-detail-container">
+    <header class="product-header">
+        <div class="product-title-container">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-main-image">
+            <h1 class="product-title">{{ product.name }}</h1>
         </div>
 
-        <!-- Крупный блок с ценой и кнопкой (на весь экран) -->
-        <div class="price-action-block bg-dark p-3 mb-4 rounded" style="border: 2px solid #00ff99;">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="d-flex align-items-center">
-                        <span class="text-light me-2">Цена:</span>
-                        <h2 class="text-neon mb-0" style="font-size: 1.5rem;">{{ product.price }} ₽</h2>
-                    </div>
-                </div>
-                <div class="col-md-6 text-md-end mt-2 mt-md-0">
-                    <a href="{% url 'purchase' product.id %}" class="btn btn-neon" style="padding: 8px 20px;">
-                        Купить сейчас
-                    </a>
-                </div>
+        <div class="product-price-block">
+            <div class="price-container">
+                <span class="price-label">Цена:</span>
+                <span class="product-price">{{ product.price }} ₽</span>
             </div>
+            <a href="{% url 'purchase' product.id %}" class="buy-now-btn">Купить сейчас</a>
         </div>
+    </header>
 
-        <!-- Информация о продавце -->
-        <div class="seller-info card mb-4 bg-dark">
-            <div class="card-body">
-                <h5 class="text-neon mb-3">Информация о продавце</h5>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="d-flex align-items-center">
-                            <div class="seller-avatar me-3">
-                                <i class="bi bi-person-circle text-light" style="font-size: 2.5rem;"></i>
-                            </div>
-                            <div class="text-light">
-                                <h4>{{ product.seller.username|default:"Администратор" }}</h4>
-                                <div class="seller-stats fs-5">
-                                    <div><i class="bi bi-check-circle"></i> Продаж: {{ seller_stats.total_sales }}</div>
-                                    <div><i class="bi bi-star-fill"></i> Рейтинг: {{ seller_stats.average_rating|floatformat:1 }}/5</div>
-                                </div>
-                            </div>
-                        </div>
+    <section class="seller-info-section">
+        <h2 class="section-title">Информация о продавце</h2>
+        <div class="seller-profile">
+            <div class="seller-avatar">
+                <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="seller-details">
+                <h3 class="seller-name">{{ product.seller.username|default:"Администратор" }}</h3>
+                <div class="seller-stats">
+                    <div class="stat-item">
+                        <i class="bi bi-check-circle"></i>
+                        <span>Продаж: {{ seller_stats.total_sales }}</span>
                     </div>
-                    <div class="col-md-6 d-flex align-items-center">
-                        <div class="rating-info w-100">
-                            <div class="d-flex justify-content-between mb-3">
-                                <span class="text-light fs-5">Рейтинг товара:</span>
-                                <div>
-                                    {% for i in "12345" %}
-                                        {% if forloop.counter <= product.rating %}
-                                            <i class="bi bi-star-fill text-warning" style="font-size: 1.2rem;"></i>
-                                        {% else %}
-                                            <i class="bi bi-star text-secondary" style="font-size: 1.2rem;"></i>
-                                        {% endif %}
-                                    {% endfor %}
-                                    <span class="ms-2 text-light fs-5">{{ product.rating|floatformat:1 }}/5</span>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="text-light fs-5">Продано:</span>
-                                <span class="text-light fs-5">{{ product.sales_count }} шт.</span>
-                            </div>
-                        </div>
+                    <div class="stat-item">
+                        <i class="bi bi-star-fill"></i>
+                        <span>Рейтинг: {{ seller_stats.average_rating|floatformat:1 }}/5</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Описание товара -->
-        <div class="product-description card bg-dark mb-4">
-            <div class="card-body">
-                <h5 class="text-neon mb-3">Описание</h5>
-                <div class="description-content text-light" style="white-space: pre-wrap; font-size: 1.1rem;">{{ product.description }}</div>
+        <div class="product-rating">
+            <div class="rating-item">
+                <span class="rating-label">Рейтинг товара:</span>
+                <div class="stars">
+                    {% for i in "12345" %}
+                        <i class="bi bi-star-fill {% if forloop.counter <= product.rating %}active{% endif %}"></i>
+                    {% endfor %}
+                    <span class="rating-value">{{ product.rating|floatformat:1 }}/5</span>
+                </div>
+            </div>
+            <div class="rating-item">
+                <span class="rating-label">Продано:</span>
+                <span class="sales-count">{{ product.sales_count }} шт.</span>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Фиксированный хедер -->
-    <div class="fixed-header">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center py-2">
-                <div class="d-flex align-items-center">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}"
-                         style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 10px;">
-                    <h5 class="text-neon mb-0">{{ product.name|truncatechars:30 }}</h5>
-                </div>
-                <div class="d-flex align-items-center">
-                    <span class="text-neon me-3 fs-5">{{ product.price }} ₽</span>
-                    <a href="{% url 'purchase' product.id %}" class="btn btn-neon">Купить</a>
-                </div>
-            </div>
-        </div>
+    <section class="product-description-section">
+        <h2 class="section-title">Описание</h2>
+        <div class="description-content">{{ product.description }}</div>
+    </section>
+</article>
+
+<div class="fixed-product-header">
+    <div class="fixed-header-content">
+        <div class="fixed-product-image"></div>
+        <h3 class="fixed-product-title">{{ product.name|truncatechars:30 }}</h3>
+        <div class="fixed-price">{{ product.price }} ₽</div>
+        <a href="{% url 'purchase' product.id %}" class="fixed-buy-btn">Купить</a>
     </div>
 </div>
+{% endblock %}
 
-<style>
-.price-action-block {
-    box-shadow: 0 0 20px rgba(0, 255, 153, 0.2);
-}
-
-.seller-info {
-    border: 1px solid #333;
-}
-
-.seller-info:hover {
-    border-color: #00ff99;
-}
-
-.product-description {
-    border: 1px solid #333;
-}
-
-.fixed-header {
-    background-color: rgba(18, 18, 18, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-    border-bottom: 1px solid #00ff99;
-}
-
-@media (max-width: 768px) {
-    .product-header {
-        text-align: center;
-    }
-
-    .d-flex.align-items-center {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .price-action-block .row > div {
-        text-align: center !important;
-    }
-
-    .price-action-block .btn {
-        width: 100%;
-        margin-top: 15px;
-    }
-
-    .seller-info .row > div {
-        margin-bottom: 20px;
-    }
-}
-</style>
+{% block extra_js %}
+<script src="{% static 'main/js/product_detail.js' %}"></script>
 {% endblock %}
