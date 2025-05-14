@@ -9,20 +9,19 @@
 
 {% block content %}
 <article class="product-detail-container">
-    <header class="product-header">
-        <div class="product-title-container">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-main-image">
-            <h1 class="product-title">{{ product.name }}</h1>
-        </div>
+    <div class="product-header-container">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-main-image">
 
-        <div class="product-price-block">
-            <div class="price-container">
-                <span class="price-label">Цена:</span>
+        <div class="product-header-text">
+            <h1 class="product-title">{{ product.name }}</h1>
+
+            <div class="product-price-block">
+                <span class="price-label">Цена: </span>
                 <span class="product-price">{{ product.price }} ₽</span>
+                <a href="{% url 'purchase' product.id %}" class="buy-now-btn">Купить сейчас</a>
             </div>
-            <a href="{% url 'purchase' product.id %}" class="buy-now-btn">Купить сейчас</a>
         </div>
-    </header>
+    </div>
 
     <section class="seller-info-section">
         <h2 class="section-title">Информация о продавце</h2>
@@ -70,9 +69,9 @@
 
 <div class="fixed-product-header">
     <div class="fixed-header-content">
-        <div class="fixed-product-image"></div>
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="fixed-product-image">
         <h3 class="fixed-product-title">{{ product.name|truncatechars:30 }}</h3>
-        <div class="fixed-price">{{ product.price }} ₽</div>
+        <span class="fixed-price">{{ product.price }} ₽</span>
         <a href="{% url 'purchase' product.id %}" class="fixed-buy-btn">Купить</a>
     </div>
 </div>

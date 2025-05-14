@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Показ/скрытие фиксированного хедера
     const productHeader = document.querySelector('.product-header');
     const fixedHeader = document.querySelector('.fixed-product-header');
 
@@ -6,17 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('scroll', function() {
             const headerRect = productHeader.getBoundingClientRect();
             if (headerRect.top < 0) {
-                fixedHeader.classList.add('show');
+                fixedHeader.style.display = 'block';
             } else {
-                fixedHeader.classList.remove('show');
+                fixedHeader.style.display = 'none';
             }
         });
-
-        // Устанавливаем изображение для фиксированного хедера
-        const mainImage = document.querySelector('.product-main-image');
-        const fixedImage = document.querySelector('.fixed-product-image');
-        if (mainImage && fixedImage) {
-            fixedImage.style.backgroundImage = `url(${mainImage.src})`;
-        }
     }
 });

@@ -1,193 +1,88 @@
 /* Основные стили */
-.purchase-success-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-}
-
-.success-card {
-    background: rgba(40, 40, 40, 0.8);
-    border-radius: 12px;
+.card.border-neon {
     border: 2px solid #00ff99;
-    box-shadow: 0 0 30px rgba(0, 255, 153, 0.2);
-    padding: 30px;
-    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 255, 153, 0.2);
+    background: rgba(30, 30, 30, 0.8);
 }
 
-.success-header {
-    margin-bottom: 30px;
-}
-
-.success-title {
+.text-neon {
     color: #00ff99;
-    font-size: 2rem;
-    margin-bottom: 0;
     text-shadow: 0 0 5px #00ff99;
 }
 
-/* Информация о товаре */
-.product-info {
-    margin-bottom: 30px;
-}
-
 .product-image {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     border-radius: 8px;
     border: 2px solid #00ff99;
-    margin-bottom: 15px;
 }
 
-.product-name {
-    color: #e0e0e0;
-    font-size: 1.3rem;
+.activation-code {
+    background-color: rgba(0, 255, 153, 0.05);
+    border: 1px solid #00ff99;
 }
 
-/* Код активации */
-.activation-code-section {
-    margin-bottom: 30px;
-}
-
-.section-title {
-    color: #00ff99;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-}
-
-.code-container {
+.code-display {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+    margin-top: 15px;
 }
 
 .code-value {
     font-family: monospace;
     font-size: 1.5rem;
     color: #00ccff;
-    background: rgba(0, 204, 255, 0.1);
-    padding: 10px 20px;
-    border-radius: 6px;
     word-break: break-all;
 }
 
-.copy-btn {
-    background: rgba(0, 255, 153, 0.1);
+.btn-neon {
+    background-color: #00ff99;
+    color: #121212;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-neon-outline {
+    background-color: transparent;
     color: #00ff99;
     border: 1px solid #00ff99;
-    border-radius: 6px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s;
+}
+
+/* Стили для звездного рейтинга */
+.star-rating-form .stars {
     display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.copy-btn:hover {
-    background: rgba(0, 255, 153, 0.2);
-    box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
-}
-
-/* Оценка товара */
-.rating-section {
-    margin-top: 30px;
-}
-
-.rating-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.stars-rating {
-    display: flex;
-    flex-direction: row-reverse;
     justify-content: center;
-    gap: 5px;
+    direction: rtl;
 }
 
-.stars-rating input {
+.star-rating-form input[type="radio"] {
     display: none;
 }
 
-.stars-rating label {
+.star-rating-form .star {
     font-size: 2rem;
     color: #444;
     cursor: pointer;
     transition: color 0.2s;
+    margin: 0 5px;
 }
 
-.stars-rating input:checked ~ label,
-.stars-rating label:hover,
-.stars-rating label:hover ~ label {
+.star-rating-form .star:hover,
+.star-rating-form .star:hover ~ .star,
+.star-rating-form input[type="radio"]:checked ~ .star {
     color: #ffcc00;
 }
 
-.submit-rating-btn {
-    background-color: #00ff99;
-    color: #121212;
-    border: none;
-    border-radius: 6px;
-    padding: 12px 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
+/* Анимации */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
-.submit-rating-btn:hover {
-    background-color: #00ccff;
-    box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
-}
-
-/* Кнопки */
-.back-btn {
-    display: inline-block;
-    background-color: #00ff99;
-    color: #121212;
-    text-decoration: none;
-    padding: 12px 30px;
-    border-radius: 6px;
-    font-weight: bold;
-    margin-top: 20px;
-    transition: all 0.3s;
-}
-
-.back-btn:hover {
-    background-color: #00ccff;
-    box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .purchase-success-container {
-        padding: 15px;
-    }
-
-    .success-card {
-        padding: 20px;
-    }
-
-    .success-title {
-        font-size: 1.5rem;
-    }
-
-    .product-image {
-        width: 120px;
-        height: 120px;
-    }
-
-    .code-container {
-        flex-direction: column;
-    }
-
-    .stars-rating label {
-        font-size: 1.8rem;
-    }
+.activation-code {
+    animation: pulse 2s infinite;
 }

@@ -92,8 +92,10 @@ def product_detail(request, product_id):
 
 def purchase(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    product.sales_count += 1
-    product.save()
+    if not request.session.get(f'purchased_{product_id}', False):
+        product.sales_count += 1
+        product.save()
+        request.session[f'purchased_{product_id}'] = True
     combinations = [c.strip() for c in product.combinations.split(',') if c.strip()]
     combination = random.choice(combinations) if combinations else "Нет комбинаций"
     return render(request, 'main/purchase_success.html', {

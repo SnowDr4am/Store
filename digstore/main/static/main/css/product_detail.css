@@ -3,57 +3,39 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    color: #e0e0e0;
 }
 
-/* Шапка товара */
 .product-header {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    margin-bottom: 40px;
-}
-
-.product-title-container {
-    flex: 1;
-    min-width: 300px;
-}
-
-.product-main-image {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    border-radius: 8px;
-    border: 2px solid #00ff99;
-    box-shadow: 0 0 20px rgba(0, 255, 153, 0.2);
+    margin-bottom: 30px;
 }
 
 .product-title {
     color: #00ff99;
     font-size: 2rem;
-    margin-top: 20px;
+    margin-bottom: auto; /* Прижимаем к верху */
+    padding-top: 10px;
     text-shadow: 0 0 5px #00ff99;
 }
 
 .product-price-block {
-    flex: 1;
-    min-width: 300px;
-    background: rgba(40, 40, 40, 0.7);
-    border: 2px solid #00ff99;
-    border-radius: 8px;
-    padding: 20px;
-    align-self: center;
+    margin-top: auto; /* Прижимаем к низу */
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .price-container {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .price-label {
     color: #e0e0e0;
     font-size: 1.2rem;
-    margin-right: 10px;
 }
 
 .product-price {
@@ -63,26 +45,47 @@
 }
 
 .buy-now-btn {
-    display: block;
-    width: 100%;
-    padding: 12px;
+    padding: 10px 25px;
     background-color: #00ff99;
     color: #121212;
     border: none;
     border-radius: 6px;
     font-size: 1.1rem;
     font-weight: bold;
-    text-align: center;
     cursor: pointer;
     transition: all 0.3s;
+    white-space: nowrap;
 }
 
 .buy-now-btn:hover {
     background-color: #00ccff;
-    box-shadow: 0 0 15px #00ccff;
+    box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
 }
 
-/* Информация о продавце */
+.product-header-container {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+    align-items: flex-start;
+}
+
+.product-main-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #00ff99;
+    box-shadow: 0 0 20px rgba(0, 255, 153, 0.2);
+    flex-shrink: 0;
+}
+
+.product-header-text {
+    display: flex;
+    flex-direction: column;
+    height: 300px; /* Фиксированная высота как у изображения */
+}
+
+/* Секция продавца */
 .seller-info-section {
     background: rgba(30, 30, 30, 0.7);
     border-radius: 8px;
@@ -188,10 +191,11 @@
     right: 0;
     background: rgba(18, 18, 18, 0.95);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid #00ff99;
     padding: 10px 0;
     z-index: 1000;
     display: none;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid #00ff99;
 }
 
 .fixed-product-header.show {
@@ -211,14 +215,17 @@
     width: 40px;
     height: 40px;
     border-radius: 4px;
-    background-size: cover;
-    background-position: center;
+    object-fit: cover;
+    margin-right: 10px;
 }
 
 .fixed-product-title {
     color: #00ff99;
     margin: 0 15px;
     flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .fixed-price {
@@ -235,42 +242,28 @@
     border-radius: 4px;
     font-weight: bold;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .product-header {
+    .product-header-container {
         flex-direction: column;
+        height: auto;
     }
 
-    .product-price-block {
+    .product-main-image {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+    }
+
+    .product-header-text {
+        height: auto;
         width: 100%;
     }
 
-    .seller-profile {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .product-rating {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .fixed-header-content {
-        padding: 0 10px;
-    }
-
-    .fixed-product-title {
-        font-size: 0.9rem;
-    }
-
-    .fixed-price {
-        font-size: 0.9rem;
-    }
-
-    .fixed-buy-btn {
-        padding: 5px 10px;
-        font-size: 0.8rem;
+    .product-price-block {
+        margin-top: 20px;
     }
 }
